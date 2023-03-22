@@ -36,7 +36,8 @@ for batch in batches:
         df = pd.read_csv(file_path, header=None)
         
         # Extract the file name from the file path
-        file_name = file_path.split('/')[-1]
+        # file_name = file_path.split('/')[-1]
+        file_name = os.path.basename(file_path).replace('.csv','')
     
         
      # Calculate the original and reverse scores for the criterion
@@ -52,7 +53,7 @@ for batch in batches:
         criterion_reverse_score = criterion_reverse_values.sum() * criterion_weight
         
         # Add the participant's score to the scores dataframe
-        participant_batch_df = participant_batch_df.append({'File Name': file_name, 'Total Score': criterion_score, 'Reverse Score': criterion_reverse_score}, ignore_index=True)
+        participant_batch_df = participant_batch_df.append({'subject': file_name, 'Total Score': criterion_score, 'Reverse Score': criterion_reverse_score}, ignore_index=True)
     
     # Save the scores dataframe to a CSV file
     participant_batch_df.to_csv(os.path.join(save_dir, 'IAS_{}.csv'.format(batch)), index=False)
