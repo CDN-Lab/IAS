@@ -54,6 +54,14 @@ sns.heatmap(correlation_matrix_spearman, mask=matrix, cmap="Spectral", annot=Tru
 plt.title("Spearman Correlation Matrix for all Parameters")
 plt.show()
 
+#computes pearsons coefficient by default
+correlation_matrix_pearson = df_corr.corr()
+fig, ax = plt.subplots(figsize=(30,15)) 
+matrix = np.triu(np.ones_like(correlation_matrix_pearson))
+sns.heatmap(correlation_matrix_pearson, mask=matrix, cmap="Spectral", annot=True, ax=ax, fmt='.2f')
+plt.title("Pearson Correlation Matrix for all Parameters")
+plt.show()
+
 
 
 ### plot distributions 
@@ -116,6 +124,8 @@ a, b = np.polyfit(x, y, 1)
 plt.scatter(x, y)
 plt.plot(x, a*x+b, 'r-')
 
+### beta correlation
+
 
 x = df_corr['ias_Reverse Score']
 y = df_corr['crdm_beta']
@@ -155,7 +165,7 @@ print(correlation, p_value)
 ## linear regression 
 
 y = df_corr['ias_Reverse Score']
-x = df_corr[['cdd_meta', 'crdm_meta', 'cpdm_avg_meta', 'crdm_beta']]
+x = df_corr[['cdd_meta', 'crdm_meta', 'cpdm_avg_meta']]
 X = sm.add_constant(x)
 
 
@@ -168,7 +178,7 @@ print(model.summary())
 
 t_values = model.tvalues[1:]
 p_values = model.pvalues[1:]
-variable_names = ['cdd_meta','crdm_meta','cpdm_avg_meta', "crdm_beta"]
+variable_names = ['cdd_meta','crdm_meta','cpdm_avg_meta']
 
 alpha = 0.05
 
